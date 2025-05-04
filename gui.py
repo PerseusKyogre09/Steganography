@@ -12,24 +12,26 @@ class StegoApp:
         self.root = root
         self.root.title("Steganography App")
         self.mode = ctk.StringVar(value="Message")
+        
+        self.mode.trace_add("write", self.update_mode_display)
 
         self.image_path = ctk.StringVar()
         self.file_path = ctk.StringVar()
 
-        # Set appearance mode and default theme
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
 
         self.setup_ui()
+        
+        self.update_mode_display()
 
     def setup_ui(self):
-        main_frame = ctk.CTkFrame(self.root)
-        main_frame.pack(padx=20, pady=20, fill="both", expand=True)
+        self.main_frame = ctk.CTkFrame(self.root)
+        self.main_frame.pack(padx=20, pady=20, fill="both", expand=True)
         
-        # Image selection
-        ctk.CTkLabel(main_frame, text="Image (PNG only):").pack(anchor="w", pady=(0, 5))
+        ctk.CTkLabel(self.main_frame, text="Image (PNG only):").pack(anchor="w", pady=(0, 5))
         
-        image_frame = ctk.CTkFrame(main_frame)
+        image_frame = ctk.CTkFrame(self.main_frame)
         image_frame.pack(fill="x", pady=(0, 15))
         
         image_entry = ctk.CTkEntry(image_frame, textvariable=self.image_path, width=400)
@@ -37,35 +39,47 @@ class StegoApp:
         
         ctk.CTkButton(image_frame, text="Browse Image", command=self.browse_image).pack(side="right")
 
-        # Mode selection
-        ctk.CTkLabel(main_frame, text="Mode:").pack(anchor="w", pady=(0, 5))
+        ctk.CTkLabel(self.main_frame, text="Mode:").pack(anchor="w", pady=(0, 5))
         
-        mode_frame = ctk.CTkFrame(main_frame)
+        mode_frame = ctk.CTkFrame(self.main_frame)
         mode_frame.pack(fill="x", pady=(0, 15))
         
         ctk.CTkRadioButton(mode_frame, text="Message", variable=self.mode, value="Message").pack(side="left", padx=(0, 20))
         ctk.CTkRadioButton(mode_frame, text="File", variable=self.mode, value="File").pack(side="left")
 
-        # Message input
-        ctk.CTkLabel(main_frame, text="Message:").pack(anchor="w", pady=(0, 5))
-        self.message_box = ctk.CTkTextbox(main_frame, height=100, width=400)
-        self.message_box.pack(fill="x", pady=(0, 15))
-
-        # File selection
-        ctk.CTkLabel(main_frame, text="File (for File mode):").pack(anchor="w", pady=(0, 5))
+        self.message_frame = ctk.CTkFrame(self.main_frame)
+        self.message_frame.pack(fill="x", pady=(0, 15))
         
-        file_frame = ctk.CTkFrame(main_frame)
-        file_frame.pack(fill="x", pady=(0, 15))
-        
-        ctk.CTkEntry(file_frame, textvariable=self.file_path, width=400).pack(side="left", fill="x", expand=True, padx=(0, 10))
-        ctk.CTkButton(file_frame, text="Browse File", command=self.browse_file).pack(side="right")
+        ctk.CTkLabel(self.message_frame, text="Message:").pack(anchor="w", pady=(0, 5))
+        self.message_box = ctk.CTkTextbox(self.message_frame, height=100, width=400)
+        self.message_box.pack(fill="x")
 
-        # Buttons
-        button_frame = ctk.CTkFrame(main_frame)
+        self.file_frame = ctk.CTkFrame(self.main_frame)
+        
+        ctk.CTkLabel(self.file_frame, text="File:").pack(anchor="w", pady=(0, 5))
+        
+        file_select_frame = ctk.CTkFrame(self.file_frame)
+        file_select_frame.pack(fill="x")
+        
+        ctk.CTkEntry(file_select_frame, textvariable=self.file_path, width=400).pack(side="left", fill="x", expand=True, padx=(0, 10))
+        ctk.CTkButton(file_select_frame, text="Browse File", command=self.browse_file).pack(side="right")
+
+        button_frame = ctk.CTkFrame(self.main_frame)
         button_frame.pack(fill="x", pady=(10, 0))
         
         ctk.CTkButton(button_frame, text="Encode", command=self.encode).pack(side="left", padx=(0, 10), fill="x", expand=True)
         ctk.CTkButton(button_frame, text="Decode", command=self.decode).pack(side="right", fill="x", expand=True)
+
+    def update_mode_display(self, *args):
+        current_mode = self.mode.get()
+        
+        self.message_frame.pack_forget()
+        self.file_frame.pack_forget()
+        
+        if current_mode == "Message":
+            self.message_frame.pack(fill="x", pady=(0, 15), after=self.main_frame.winfo_children()[3])
+        else:
+            self.file_frame.pack(fill="x", pady=(0, 15), after=self.main_frame.winfo_children()[3])
 
     def browse_image(self):
         path = filedialog.askopenfilename(filetypes=[("PNG images", "*.png")])
@@ -83,14 +97,12 @@ class StegoApp:
             messagebox.showerror("Error", "Please select an image.")
             return
 
-        # Prepare the data
         if self.mode.get() == "Message":
             text = self.message_box.get("0.0", "end").strip()
             if not text:
                 messagebox.showerror("Error", "Please enter a message.")
                 return
                 
-            # Encode text
             data = TEXT_TYPE + text.encode('utf-8')
         else:
             file_path = self.file_path.get()
@@ -102,7 +114,7 @@ class StegoApp:
                 _, file_ext = os.path.splitext(file_path)
                 
                 file_size = os.path.getsize(file_path)
-                if file_size > 10 * 1024 * 1024:  # 10 MB max warning
+                if file_size > 10 * 1024 * 1024:
                     proceed = messagebox.askyesno(
                         "Large File Warning", 
                         f"The selected file is {file_size/1024/1024:.2f} MB. "
@@ -124,12 +136,10 @@ class StegoApp:
                 messagebox.showerror("Error", f"Failed to read file: {str(e)}")
                 return
 
-        # Save the encoded image
         output_path = filedialog.asksaveasfilename(
             defaultextension=".png",
             filetypes=[("PNG images", "*.png")]
         )
-        # If user cancels the save
         if not output_path:
             return
             
@@ -152,12 +162,9 @@ class StegoApp:
             return
             
         try:
-            # Decode data from the image
             decoded_data = decode_data_from_image(image)
             
-            # Check if it's text data
             if decoded_data.startswith(TEXT_TYPE):
-                # Display the text message
                 text = decoded_data[len(TEXT_TYPE):].decode('utf-8')
                 messagebox.showinfo("Decoded Text", text)
                 
@@ -170,7 +177,6 @@ class StegoApp:
                 
                 content = file_data[2+ext_len:]
                 
-                # Save the decoded file
                 save_path = filedialog.asksaveasfilename(
                     defaultextension=ext,
                     filetypes=[("All files", "*.*")]
@@ -184,7 +190,6 @@ class StegoApp:
                         f"File decoded and saved to {save_path}\n"
                         f"File size: {len(content)/1024:.2f} KB"
                     )
-            #If file data is not correct
             else:
                 try:
                     text = decoded_data.decode('utf-8')
