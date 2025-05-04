@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cicada Steganography</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cicada Steganography</h1>
+            <p class="subtitle">Hide messages or files within images</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="encode">Encode</button>
+            <button class="tab-btn" data-tab="decode">Decode</button>
+        </div>
+
+        <div class="tab-content active" id="encode-tab">
+            <div class="main-content">
+                <div class="left-panel">
+                    <h2>Steganography Encoder</h2>
+                    
+                    <div class="form-group">
+                        <label>Select Cover Image (PNG):</label>
+                        <div class="file-input">
+                            <input type="file" id="encode-image-input" accept=".png">
+                            <button class="browse-btn">Browse</button>
+                            <span class="file-name" id="encode-image-name">No file selected</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Encoding Mode:</label>
+                        <div class="radio-group">
+                            <label class="radio">
+                                <input type="radio" name="encode-mode" value="message" checked>
+                                <span>Text Message</span>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="encode-mode" value="file">
+                                <span>File</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="message-input-container" class="form-group">
+                        <label>Enter Message:</label>
+                        <textarea id="message-input" rows="5"></textarea>
+                    </div>
+
+                    <div id="file-input-container" class="form-group hidden">
+                        <label>Select File to Hide:</label>
+                        <div class="file-input">
+                            <input type="file" id="encode-file-input">
+                            <button class="browse-btn">Browse</button>
+                            <span class="file-name" id="encode-file-name">No file selected</span>
+                        </div>
+                        <p id="file-info" class="small-text">No file selected</p>
+                    </div>
+
+                    <button id="encode-btn" class="primary-btn">Encode Data</button>
+                </div>
+                
+                <div class="right-panel">
+                    <h2>Image Preview</h2>
+                    <div class="preview-container">
+                        <div id="encode-preview-placeholder">No image selected</div>
+                        <img id="encode-preview-image" class="hidden">
+                    </div>
+                    <p id="image-info" class="small-text"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="decode-tab">
+            <div class="main-content">
+                <div class="left-panel">
+                    <h2>Steganography Decoder</h2>
+                    
+                    <div class="form-group">
+                        <label>Select Image to Decode:</label>
+                        <div class="file-input">
+                            <input type="file" id="decode-image-input" accept=".png">
+                            <button class="browse-btn">Browse</button>
+                            <span class="file-name" id="decode-image-name">No file selected</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>Output will be detected automatically:</h3>
+                        <ul>
+                            <li>Text messages will be displayed on screen</li>
+                            <li>Files will be downloaded to your device</li>
+                        </ul>
+                    </div>
+
+                    <button id="decode-btn" class="secondary-btn">Decode Data</button>
+                </div>
+                
+                <div class="right-panel">
+                    <h2>Image Preview</h2>
+                    <div class="preview-container">
+                        <div id="decode-preview-placeholder">No image selected</div>
+                        <img id="decode-preview-image" class="hidden">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Decoded Message</h2>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+        <div id="loading-overlay" class="hidden">
+            <div class="spinner"></div>
+            <p id="loading-text">Processing...</p>
+        </div>
+
+        <footer>
+            <p id="status-text">Ready</p>
+        </footer>
+    </div>
+
+    <script src="js/stego.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

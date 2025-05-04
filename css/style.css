@@ -1,0 +1,371 @@
+/* Main Styles */
+:root {
+    --primary-color: #2D7D46;
+    --secondary-color: #7D2D5E;
+    --bg-color: #2C2C2C;
+    --panel-bg: #1A1A1A;
+    --text-color: #E0E0E0;
+    --border-color: #444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.tab-btn:hover {
+    opacity: 1;
+}
+
+.tab-btn.active {
+    opacity: 1;
+}
+
+.tab-btn.active:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.tab-btn[data-tab="decode"].active:after {
+    background-color: var(--secondary-color);
+}
+
+.tab-content {
+    display: none;
+    flex: 1;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.left-panel, .right-panel {
+    padding: 20px;
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+}
+
+.left-panel {
+    flex: 1;
+}
+
+.right-panel {
+    flex: 0 0 300px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.file-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.file-input input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+}
+
+.browse-btn {
+    background-color: var(--border-color);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.browse-btn:hover {
+    background-color: #555;
+}
+
+.file-name {
+    padding: 8px 15px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio input {
+    margin-right: 8px;
+}
+
+textarea {
+    width: 100%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    padding: 10px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.small-text {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.info-box {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.info-box h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.info-box ul {
+    padding-left: 20px;
+}
+
+/* Buttons */
+.primary-btn, .secondary-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+}
+
+.primary-btn:hover {
+    background-color: #235E35;
+}
+
+.secondary-btn {
+    background-color: var(--secondary-color);
+}
+
+.secondary-btn:hover {
+    background-color: #5E2346;
+}
+
+/* Preview */
+.preview-container {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#encode-preview-image, #decode-preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--panel-bg);
+    margin: 10% auto;
+    padding: 20px;
+    width: 70%;
+    max-width: 700px;
+    border-radius: 8px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#modal-body {
+    margin-top: 20px;
+}
+
+#modal-body pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+
+/* Loading Overlay */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 5px solid var(--primary-color);
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+#status-text {
+    opacity: 0.7;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .right-panel {
+        flex: auto;
+    }
+    
+    .modal-content {
+        width: 90%;
+    }
+}
