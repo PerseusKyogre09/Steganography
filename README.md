@@ -22,6 +22,10 @@ This project consists of two implementations:
   - CustomTkinter
   - Pillow (PIL)
   - Standard Python libraries (os, struct, threading, queue)
+- Install requirements by running
+```bash
+pip install -r requirements.txt
+```
 
 ### Files
 
@@ -66,7 +70,7 @@ A client-side web version of the Steganography tool with all the same functional
 
 ### Using the Web Version
 
-1. Open `index.html` in any modern web browser
+1. Open [Steganography](https://perseuskyogre09.github.io/Steganography/) in any modern web browser
 2. No installation required!
 
 ## How Steganography Works
@@ -84,25 +88,6 @@ A client-side web version of the Steganography tool with all the same functional
    - Data is decompressed if necessary
    - The type marker determines if it's text or a file
    - For files, the extension is preserved for proper opening
-
-## Hosting the Web Version
-
-### GitHub Pages
-
-1. Create a GitHub repository
-2. Upload all the project files to the repository
-3. Go to Settings > Pages
-4. Select the branch you want to deploy (usually 'main')
-5. Your site will be published at `https://{username}.github.io/{repository-name}/`
-
-### Vercel
-
-1. Create a Vercel account at https://vercel.com
-2. Install the Vercel CLI: `npm install -g vercel`
-3. Login to Vercel: `vercel login`
-4. Navigate to your project directory
-5. Deploy with: `vercel`
-6. Follow the prompts and your site will be live!
 
 ## Privacy & Security
 
