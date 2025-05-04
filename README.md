@@ -1,5 +1,4 @@
 # Steganography
-
 Steganography is a steganography tool that allows you to hide messages or files inside PNG images. It offers both a Python desktop application and a web-based version for maximum flexibility.
 
 ## Overview
@@ -19,9 +18,9 @@ This project consists of two implementations:
 
 - Python 3.6+
 - Dependencies:
-  - CustomTkinter
-  - Pillow (PIL)
-  - Standard Python libraries (os, struct, threading, queue)
+    - CustomTkinter
+    - Pillow (PIL)
+    - Standard Python libraries (os, struct, threading, queue)
 - Install requirements by running
 ```bash
 pip install -r requirements.txt
@@ -76,18 +75,18 @@ A client-side web version of the Steganography tool with all the same functional
 ## How Steganography Works
 
 1. **Encoding**:
-   - The image pixels are accessed through RGB channels
-   - The least significant bit(s) of each color channel are replaced with bits from the data
-   - An EOF marker is appended to the data for reliable extraction
-   - Data is optionally compressed to save space
-   - Special markers differentiate between text and file data
+     - The image pixels are accessed through RGB channels
+     - The least significant bit(s) of each color channel are replaced with bits from the data
+     - An EOF marker is appended to the data for reliable extraction
+     - Data is optionally compressed to save space
+     - Special markers differentiate between text and file data
 
 2. **Decoding**:
-   - The least significant bit(s) of each pixel's color channels are extracted
-   - The process continues until the EOF marker is found
-   - Data is decompressed if necessary
-   - The type marker determines if it's text or a file
-   - For files, the extension is preserved for proper opening
+     - The least significant bit(s) of each pixel's color channels are extracted
+     - The process continues until the EOF marker is found
+     - Data is decompressed if necessary
+     - The type marker determines if it's text or a file
+     - For files, the extension is preserved for proper opening
 
 ## Privacy & Security
 
@@ -113,4 +112,4 @@ The web version works with all modern browsers including:
 
 ## License
 
-MIT License - Feel free to use, modify, and distribute!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
