@@ -19,12 +19,13 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -32,11 +33,11 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-bottom: 10px;
 }
 
@@ -50,22 +51,30 @@ h1 {
     display: flex;
     margin-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .tab-btn {
     background: none;
     border: none;
     color: var(--text-color);
-    padding: 10px 30px;
+    padding: 12px 30px;
     font-size: 1.1rem;
     cursor: pointer;
     position: relative;
     opacity: 0.7;
     transition: opacity 0.3s;
+    white-space: nowrap; /* Prevent wrapping */
+    flex: 1; /* Equal width tabs */
 }
 
 .tab-btn:hover {
     opacity: 1;
+}
+
+.tab-btn:active {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle feedback on touch */
 }
 
 .tab-btn.active {
@@ -98,27 +107,21 @@ h1 {
 /* Main Content Layout */
 .main-content {
     display: flex;
-    gap: 30px;
-    margin-bottom: 30px;
+    flex-direction: column; /* Stack on mobile */
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .left-panel, .right-panel {
     padding: 20px;
     background-color: var(--panel-bg);
     border-radius: 8px;
-}
-
-.left-panel {
-    flex: 1;
-}
-
-.right-panel {
-    flex: 0 0 300px;
+    width: 100%; /* Full width on mobile */
 }
 
 h2 {
     margin-bottom: 20px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 /* Form Elements */
@@ -138,6 +141,7 @@ label {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     overflow: hidden;
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
 }
 
 .file-input input[type="file"] {
@@ -151,17 +155,23 @@ label {
     background-color: var(--border-color);
     color: var(--text-color);
     border: none;
-    padding: 8px 15px;
+    padding: 12px 15px; /* Larger touch target */
     cursor: pointer;
     transition: background-color 0.3s;
+    touch-action: manipulation; /* Optimization for touch */
+    min-width: 80px; /* Ensure minimum button size for touch */
 }
 
 .browse-btn:hover {
     background-color: #555;
 }
 
+.browse-btn:active {
+    background-color: #666; /* Visual feedback on touch */
+}
+
 .file-name {
-    padding: 8px 15px;
+    padding: 12px 15px;
     flex-grow: 1;
     white-space: nowrap;
     overflow: hidden;
@@ -171,16 +181,21 @@ label {
 .radio-group {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
 }
 
 .radio {
     display: flex;
     align-items: center;
     cursor: pointer;
+    padding: 8px 0; /* Larger touch target */
+    min-height: 44px; /* Minimum height for touch targets */
 }
 
 .radio input {
     margin-right: 8px;
+    width: 20px; /* Larger for touch */
+    height: 20px; /* Larger for touch */
 }
 
 textarea {
@@ -189,9 +204,11 @@ textarea {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     color: var(--text-color);
-    padding: 10px;
+    padding: 12px;
     font-family: inherit;
     resize: vertical;
+    min-height: 100px;
+    font-size: 16px; /* Prevent zoom on iOS */
 }
 
 .small-text {
@@ -221,7 +238,7 @@ textarea {
 .primary-btn, .secondary-btn {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: 15px; /* Larger for touch */
     border: none;
     border-radius: 4px;
     color: white;
@@ -229,6 +246,8 @@ textarea {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    touch-action: manipulation; /* Optimization for touch */
+    min-height: 50px; /* Minimum height for touch targets */
 }
 
 .primary-btn {
@@ -239,6 +258,10 @@ textarea {
     background-color: #235E35;
 }
 
+.primary-btn:active {
+    background-color: #1a472a; /* Visual feedback on touch */
+}
+
 .secondary-btn {
     background-color: var(--secondary-color);
 }
@@ -247,9 +270,13 @@ textarea {
     background-color: #5E2346;
 }
 
+.secondary-btn:active {
+    background-color: #461a34; /* Visual feedback on touch */
+}
+
 /* Preview */
 .preview-container {
-    height: 300px;
+    height: 250px; /* Smaller on mobile */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -275,6 +302,7 @@ textarea {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
+    overflow-y: auto; /* Allow scrolling on mobile */
 }
 
 .modal-content {
@@ -282,7 +310,7 @@ textarea {
     background-color: var(--panel-bg);
     margin: 10% auto;
     padding: 20px;
-    width: 70%;
+    width: 90%; /* Wider on mobile */
     max-width: 700px;
     border-radius: 8px;
     max-height: 80%;
@@ -295,6 +323,11 @@ textarea {
     right: 15px;
     font-size: 24px;
     cursor: pointer;
+    padding: 10px; /* Larger touch target */
+    line-height: 24px;
+    height: 44px;
+    width: 44px;
+    text-align: center;
 }
 
 #modal-body {
@@ -307,6 +340,7 @@ textarea {
     border-radius: 4px;
     overflow-x: auto;
     white-space: pre-wrap;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 /* Loading Overlay */
@@ -356,16 +390,75 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .main-content {
-        flex-direction: column;
+        flex-direction: row; /* Side-by-side on tablets and up */
+    }
+    
+    .left-panel {
+        flex: 1;
     }
     
     .right-panel {
-        flex: auto;
+        flex: 0 0 300px;
+        width: auto;
     }
     
-    .modal-content {
-        width: 90%;
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .preview-container {
+        height: 300px; /* Taller on desktop */
+    }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+    .tab-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .preview-container {
+        height: 200px;
+    }
+    
+    .left-panel, .right-panel {
+        padding: 15px;
+    }
+}
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    select,
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"] {
+        font-size: 16px;
     }
 }

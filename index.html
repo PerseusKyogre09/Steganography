@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cicada Steganography</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#2C2C2C">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Cicada Steganography</h1>
+            <h1>Steganography</h1>
             <p class="subtitle">Hide messages or files within images</p>
         </header>
 
@@ -25,10 +26,10 @@
                     <h2>Steganography Encoder</h2>
                     
                     <div class="form-group">
-                        <label>Select Cover Image (PNG):</label>
+                        <label for="encode-image-input">Select Cover Image (PNG):</label>
                         <div class="file-input">
-                            <input type="file" id="encode-image-input" accept=".png">
-                            <button class="browse-btn">Browse</button>
+                            <input type="file" id="encode-image-input" accept="image/png" capture="environment">
+                            <button class="browse-btn" type="button" aria-label="Browse for image">Browse</button>
                             <span class="file-name" id="encode-image-name">No file selected</span>
                         </div>
                     </div>
@@ -48,28 +49,28 @@
                     </div>
 
                     <div id="message-input-container" class="form-group">
-                        <label>Enter Message:</label>
-                        <textarea id="message-input" rows="5"></textarea>
+                        <label for="message-input">Enter Message:</label>
+                        <textarea id="message-input" rows="5" placeholder="Type your secret message here..."></textarea>
                     </div>
 
                     <div id="file-input-container" class="form-group hidden">
-                        <label>Select File to Hide:</label>
+                        <label for="encode-file-input">Select File to Hide:</label>
                         <div class="file-input">
                             <input type="file" id="encode-file-input">
-                            <button class="browse-btn">Browse</button>
+                            <button class="browse-btn" type="button" aria-label="Browse for file">Browse</button>
                             <span class="file-name" id="encode-file-name">No file selected</span>
                         </div>
                         <p id="file-info" class="small-text">No file selected</p>
                     </div>
 
-                    <button id="encode-btn" class="primary-btn">Encode Data</button>
+                    <button id="encode-btn" class="primary-btn" type="button">Encode Data</button>
                 </div>
                 
                 <div class="right-panel">
                     <h2>Image Preview</h2>
                     <div class="preview-container">
                         <div id="encode-preview-placeholder">No image selected</div>
-                        <img id="encode-preview-image" class="hidden">
+                        <img id="encode-preview-image" class="hidden" alt="Preview of selected image">
                     </div>
                     <p id="image-info" class="small-text"></p>
                 </div>
@@ -82,10 +83,10 @@
                     <h2>Steganography Decoder</h2>
                     
                     <div class="form-group">
-                        <label>Select Image to Decode:</label>
+                        <label for="decode-image-input">Select Image to Decode:</label>
                         <div class="file-input">
-                            <input type="file" id="decode-image-input" accept=".png">
-                            <button class="browse-btn">Browse</button>
+                            <input type="file" id="decode-image-input" accept="image/png" capture="environment">
+                            <button class="browse-btn" type="button" aria-label="Browse for image">Browse</button>
                             <span class="file-name" id="decode-image-name">No file selected</span>
                         </div>
                     </div>
@@ -98,34 +99,34 @@
                         </ul>
                     </div>
 
-                    <button id="decode-btn" class="secondary-btn">Decode Data</button>
+                    <button id="decode-btn" class="secondary-btn" type="button">Decode Data</button>
                 </div>
                 
                 <div class="right-panel">
                     <h2>Image Preview</h2>
                     <div class="preview-container">
                         <div id="decode-preview-placeholder">No image selected</div>
-                        <img id="decode-preview-image" class="hidden">
+                        <img id="decode-preview-image" class="hidden" alt="Preview of selected image">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="result-modal" class="modal">
+        <div id="result-modal" class="modal" role="dialog" aria-labelledby="modal-title">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
+                <span class="close-modal" aria-label="Close">&times;</span>
                 <h2 id="modal-title">Decoded Message</h2>
                 <div id="modal-body"></div>
             </div>
         </div>
 
-        <div id="loading-overlay" class="hidden">
-            <div class="spinner"></div>
+        <div id="loading-overlay" class="hidden" aria-live="polite">
+            <div class="spinner" role="progressbar" aria-label="Loading"></div>
             <p id="loading-text">Processing...</p>
         </div>
 
         <footer>
-            <p id="status-text">Ready</p>
+            <p id="status-text" aria-live="polite">Ready</p>
         </footer>
     </div>
 
